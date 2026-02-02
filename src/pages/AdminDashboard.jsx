@@ -20,7 +20,7 @@ export default function AdminDashboard() {
 
       const [ordersRes, menuRes] = await Promise.all([
         axios.get(`${apiUrl}/api/orders`),
-        axios.get(`${apiUrl}/api/menu`)
+        axios.get(`${apiUrl}/api/menuitems`)
       ]);
 
       setOrders(ordersRes.data);
@@ -55,7 +55,7 @@ export default function AdminDashboard() {
     try {
       const apiUrl = import.meta.env.VITE_API_URL;
       await axios.put(
-        `${apiUrl}/api/menu/${itemId}`,
+        `${apiUrl}/api/menuitems/${itemId}`,
         { available: !currentStatus }
       );
 
@@ -74,7 +74,7 @@ export default function AdminDashboard() {
 
     try {
       const apiUrl = import.meta.env.VITE_API_URL;
-      await axios.delete(`${apiUrl}/api/menu/${itemId}`);
+      await axios.delete(`${apiUrl}/api/menuitems/${itemId}`);
 
       setMenuItems(menuItems.filter(item => item._id !== itemId));
       toast.success('Menu item deleted');

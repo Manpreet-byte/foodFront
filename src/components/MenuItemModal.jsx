@@ -2,6 +2,55 @@ import React, { useState } from 'react';
 import { useCart } from '../context/CartContext';
 import { toast } from 'react-toastify';
 
+// Category-based default images for gallery
+const categoryGalleryImages = {
+  'Pizza': [
+    'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=800&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=800&h=600&fit=crop'
+  ],
+  'Burger': [
+    'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=800&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?w=800&h=600&fit=crop'
+  ],
+  'Pasta': [
+    'https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=800&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1563379926898-05f4575a45d8?w=800&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1473093295043-cdd812d0e601?w=800&h=600&fit=crop'
+  ],
+  'Salad': [
+    'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1540420773420-3366772f4999?w=800&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1607532941433-304659e8198a?w=800&h=600&fit=crop'
+  ],
+  'Dessert': [
+    'https://images.unsplash.com/photo-1551024601-bec78aea704b?w=800&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?w=800&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1587314168485-3236d6710814?w=800&h=600&fit=crop'
+  ],
+  'Drinks': [
+    'https://images.unsplash.com/photo-1544145945-f90425340c7e?w=800&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1534353473418-4cfa6c56fd38?w=800&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=800&h=600&fit=crop'
+  ],
+  'Appetizer': [
+    'https://images.unsplash.com/photo-1541014741259-de529411b96a?w=800&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1626200419199-391ae4be7a41?w=800&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=800&h=600&fit=crop'
+  ],
+  'Main Course': [
+    'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=800&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&h=600&fit=crop'
+  ],
+  'default': [
+    'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1493770348161-369560ae357d?w=800&h=600&fit=crop',
+    'https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?w=800&h=600&fit=crop'
+  ]
+};
+
 const MenuItemModal = ({ item, onClose }) => {
   const [quantity, setQuantity] = useState(1);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -10,10 +59,19 @@ const MenuItemModal = ({ item, onClose }) => {
 
   if (!item) return null;
 
-  // Use imageGallery if available, otherwise fall back to single image
-  const images = item.imageGallery && item.imageGallery.length > 0 
-    ? item.imageGallery 
-    : [item.image || item.imageUrl || 'https://via.placeholder.com/800x600?text=Delicious+Food'];
+  // Get images from imageGallery (extract URLs from objects) or use category defaults
+  const getImages = () => {
+    // Check if imageGallery exists and has items
+    if (item.imageGallery && item.imageGallery.length > 0) {
+      return item.imageGallery.map(img => typeof img === 'string' ? img : img.url);
+    }
+    
+    // Use category-based default gallery images
+    const category = item.category || 'default';
+    return categoryGalleryImages[category] || categoryGalleryImages['default'];
+  };
+
+  const images = getImages();
 
   const nextImage = () => {
     setCurrentImageIndex((prev) => (prev + 1) % images.length);
