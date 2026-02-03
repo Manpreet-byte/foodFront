@@ -280,7 +280,7 @@ export default function Checkout() {
   const [pendingOrderPayload, setPendingOrderPayload] = useState(null);
 
   const total = cart.items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-  const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   // Handle fake payment success
   const handleFakePaymentSuccess = async (paymentResult) => {

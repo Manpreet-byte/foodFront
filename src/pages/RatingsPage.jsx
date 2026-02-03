@@ -19,7 +19,7 @@ export default function RatingsPage() {
 
   const fetchRatings = async () => {
     try {
-      const res = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/ratings`);
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/ratings`);
       setAllRatings(res.data.ratings);
       setStats(res.data.stats);
     } catch (err) {
@@ -41,7 +41,7 @@ export default function RatingsPage() {
 
     setLoading(true);
     try {
-      await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/ratings`, {
+      await axios.post(`${import.meta.env.VITE_API_URL}/api/ratings`, {
         rating,
         comment,
         userName: user.name,
@@ -65,7 +65,7 @@ export default function RatingsPage() {
     }
 
     try {
-      await axios.delete(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/ratings/${ratingId}`);
+      await axios.delete(`${import.meta.env.VITE_API_URL}/api/ratings/${ratingId}`);
       toast.success('Rating deleted successfully');
       fetchRatings();
     } catch (err) {

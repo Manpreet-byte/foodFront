@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-const apiBase = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+const apiBase = import.meta.env.VITE_API_URL;
 
 function isYouTubeUrl(url) {
   return /youtube\.com|youtu\.be/.test(url);

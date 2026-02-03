@@ -44,7 +44,7 @@ export default function OrderHistory() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+    const apiUrl = import.meta.env.VITE_API_URL;
     axios.get(`${apiUrl}/api/orders/my-orders`)
       .then(res => {
         setOrders(res.data);

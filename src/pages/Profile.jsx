@@ -20,7 +20,7 @@ export default function Profile() {
   const [addresses, setAddresses] = useState([]);
   const [newAddress, setNewAddress] = useState({ label: '', address: '', isDefault: false });
 
-  const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     if (user) {
